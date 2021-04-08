@@ -2,7 +2,13 @@ grammar pir;
 
 start: generalDeclaration* EOF;
 
-generalArgument: GeneralLiteral | Identifier;
+/* Por enquanto, só Identifiers como parâmetro de instância de classe */
+generalArgument:
+	Identifier
+	| BooleanLiteral
+	| CharLiteral
+	| FloatLiteral
+	| IntegerLiteral;
 generalArguments: generalArgument (',' generalArgument)*;
 
 classAssignment:

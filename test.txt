@@ -1,4 +1,2 @@
 threedecker: Threedecker = Threedecker(a, b, c)
-onedecker: Threedecker = Threedecker(1)
-nonedecker: Threedecker = Threedecker()
-frigate: Frigate = Frigate(1, 2, 3)
+nonedecker: Threedecker = Threedecker(Aye, 'c', 2.0, 5)
