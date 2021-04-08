@@ -2,14 +2,16 @@ grammar pir;
 
 start: generalDeclaration* EOF;
 
-/* Por enquanto, só Identifiers como parâmetro de instância de classe */
 generalArgument:
 	Identifier
 	| BooleanLiteral
 	| CharLiteral
 	| FloatLiteral
 	| IntegerLiteral;
+
 generalArguments: generalArgument (',' generalArgument)*;
+
+typedArguments: typeDeclaration (',' typeDeclaration)*;
 
 classAssignment:
 	Identifier ':' ClassIdentifier '=' ClassIdentifier '(' generalArguments? ')';
@@ -40,6 +42,13 @@ charType: 'Char';
 numberType: integerType | floatType;
 type: booleanType | integerType | floatType | charType;
 
+functionKeyword: 'ahoy';
+functionName: Identifier;
+functionDeclaration:
+	functionKeyword functionName '(' typedArguments? ')' '{' generalDeclaration* '}';
+
+functionInvocation: functionName '(' generalArguments? ')';
+
 classDeclaration:
 	simpleClassDeclaration
 	| completeClassDeclaration;
@@ -58,6 +67,8 @@ generalDeclaration:
 	| generalExpression
 	| typeDeclaration
 	| classDeclaration
+	| functionDeclaration
+	| functionInvocation
 	| NewLine;
 
 generalExpression: loopExpression | controlExpression;
