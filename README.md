@@ -12,7 +12,7 @@
 [x] 4 tipos, sendo int e float obrigatórios;
 [] Instância e uso de classes;
 [] Definição e chamada de funções;
-[] Estruturas de controle if-then-else e switch-case.
-[] Laços for e while;
+[x] Estruturas de controle if-then-else e switch-case.
+[x] Laços for e while;
 [x] Operações *, /, +, -, >, <, <=, >= e == seguindo essa ordem de precedência;
 [x] Possibilidade de definir a precedência de operaçõoes usando parênteses.

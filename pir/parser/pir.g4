@@ -29,18 +29,30 @@ typeDeclaration: Identifier ':' type;
 
 generalDeclaration:
 	generalAssignment
-	| typeDeclaration
 	| generalExpression
+	| typeDeclaration
 	| NewLine;
 
-generalExpression:
-	'while' cond = comparisonExpression '{' generalDeclaration+ '}'
-	| 'for' Identifier 'in' Identifier '{' generalDeclaration+ '}';
+generalExpression: loopExpression | controlExpression;
+
+loopExpression: whileExpression | forExpression;
+
+whileExpression:
+	'while' cond = comparisonExpression '{' generalDeclaration+ '}';
+forExpression:
+	'for' Identifier 'in' Identifier '{' generalDeclaration+ '}';
+
+controlExpression: ifExpression elseExpression?;
+
+ifExpression:
+	'if' cond = comparisonExpression '{' generalDeclaration+ '}';
+
+elseExpression: 'else' '{' generalDeclaration+ '}';
 
 comparisonExpression:
 	(comparisonOperand comparisonOperator comparisonOperand)
 	| BooleanLiteral;
-comparisonOperand: (IntegerLiteral | FloatLiteral);
+comparisonOperand: (IntegerLiteral | FloatLiteral | Identifier);
 comparisonOperator: '>' | '<' | '>=' | '<=' | '==' | '!=';
 
 generalAssignment:

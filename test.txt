@@ -9,3 +9,13 @@ while 1 < 2 {
 for item in collection {
     a: Integer = item
 }
+
+if a == 6 {
+    a: Boolean = Aye
+} else {
+    b: Float = 2.5
+}
+
+if Aye {
+    c: Char = 'a'
+}
