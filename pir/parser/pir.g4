@@ -3,18 +3,19 @@ grammar pir;
 start: generalDeclaration* EOF;
 
 booleanAssignment:
-	Identifier ':' booleanType '=' BooleanLiteral;
+	Identifier ':' booleanType '=' (BooleanLiteral | Identifier);
 integerAssignment:
-	Identifier ':' integerType '=' IntegerLiteral;
-floatAssignment: Identifier ':' floatType '=' FloatLiteral;
-charAssignment: Identifier ':' charType '=' CharLiteral;
+	Identifier ':' integerType '=' (IntegerLiteral | Identifier);
+floatAssignment:
+	Identifier ':' floatType '=' (FloatLiteral | Identifier);
+charAssignment:
+	Identifier ':' charType '=' (CharLiteral | Identifier);
 
 BooleanLiteral: 'Aye' | 'Nay';
 IntegerLiteral: [0-9]+;
 FloatLiteral: [0-9]+ '.' [0-9]+;
-NumberLiteral: IntegerLiteral | FloatLiteral;
 CharLiteral: '\'' [a-zA-Z] '\'';
-ClassIdentifier: [A-Z][a-zA-Z]*;
+GeneralLiteral: BooleanLiteral | IntegerLiteral | FloatLiteral;
 
 booleanType: 'Boolean';
 integerType: 'Integer';
@@ -26,9 +27,23 @@ type: booleanType | integerType | floatType | charType;
 
 typeDeclaration: Identifier ':' type;
 
-generalDeclaration: assignment | typeDeclaration | NewLine;
+generalDeclaration:
+	generalAssignment
+	| typeDeclaration
+	| generalExpression
+	| NewLine;
 
-assignment:
+generalExpression:
+	'while' cond = comparisonExpression '{' generalDeclaration+ '}'
+	| 'for' Identifier 'in' Identifier '{' generalDeclaration+ '}';
+
+comparisonExpression:
+	(comparisonOperand comparisonOperator comparisonOperand)
+	| BooleanLiteral;
+comparisonOperand: (IntegerLiteral | FloatLiteral);
+comparisonOperator: '>' | '<' | '>=' | '<=' | '==' | '!=';
+
+generalAssignment:
 	booleanAssignment
 	| floatAssignment
 	| integerAssignment

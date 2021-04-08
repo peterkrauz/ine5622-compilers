@@ -1,4 +1,11 @@
-a: Integer = 1
-b: Float = 2.3
-c: Boolean = Aye
-d: Char = 'd'
+while Aye {
+    a: Integer = 6
+}
+
+while 1 < 2 {
+    b: Float = 7.5
+}
+
+for item in collection {
+    a: Integer = item
+}
