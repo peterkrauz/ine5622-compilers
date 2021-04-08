@@ -1,21 +1,11 @@
+class Galleon
+class Threedecker(hullSize: Float, numberOfCannons: Integer)
+class Frigate {
+    timeAtSea: Integer = 25
+}
+
 while Aye {
-    a: Integer = 6
-}
-
-while 1 < 2 {
-    b: Float = 7.5
-}
-
-for item in collection {
-    a: Integer = item
-}
-
-if a == 6 {
-    a: Boolean = Aye
-} else {
-    b: Float = 2.5
-}
-
-if Aye {
-    c: Char = 'a'
+    galleon: Galleon = Galleon()
+    threedecker: Threedecker = Threedecker()
+    frigate: Frigate = Frigate()
 }

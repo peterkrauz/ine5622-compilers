@@ -25,12 +25,24 @@ charType: 'Char';
 numberType: integerType | floatType;
 type: booleanType | integerType | floatType | charType;
 
+classDeclaration:
+	simpleClassDeclaration
+	| completeClassDeclaration;
+
+classConstructor:
+	'(' typeDeclaration (',' typeDeclaration)* ')';
+simpleClassDeclaration:
+	'class' ClassIdentifier classConstructor?;
+completeClassDeclaration:
+	simpleClassDeclaration '{' generalDeclaration* '}';
+
 typeDeclaration: Identifier ':' type;
 
 generalDeclaration:
 	generalAssignment
 	| generalExpression
 	| typeDeclaration
+	| classDeclaration
 	| NewLine;
 
 generalExpression: loopExpression | controlExpression;
@@ -64,5 +76,6 @@ generalAssignment:
 baseParameter: Identifier | IntegerLiteral | FloatLiteral;
 
 NewLine: '\n';
+ClassIdentifier: [A-Z][a-zA-Z]*;
 Identifier: [a-zA-Z]+;
 WS: [\n\r\u0020\u0009\u000C]+ -> skip;
