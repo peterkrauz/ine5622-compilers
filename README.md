@@ -1,7 +1,18 @@
-# <title>
+# Pir: Lexemas de um Corsário
 
 ## <section>
 
-## <another_section>
+## Tradução dos Termos
 
-## <yet_another_section>
+> ### Ahoy! (Declaração de Função)
+
+
+## Requisitos do Trabalho
+
+[x] 4 tipos, sendo int e float obrigatórios;
+[] Instância e uso de classes;
+[] Definição e chamada de funções;
+[] Estruturas de controle if-then-else e switch-case.
+[] Laços for e while;
+[x] Operações *, /, +, -, >, <, <=, >= e == seguindo essa ordem de precedência;
+[x] Possibilidade de definir a precedência de operaçõoes usando parênteses.
