@@ -1,11 +1,4 @@
-class Galleon
-class Threedecker(hullSize: Float, numberOfCannons: Integer)
-class Frigate {
-    timeAtSea: Integer = 25
-}
-
-while Aye {
-    galleon: Galleon = Galleon()
-    threedecker: Threedecker = Threedecker()
-    frigate: Frigate = Frigate()
-}
+threedecker: Threedecker = Threedecker(a, b, c)
+onedecker: Threedecker = Threedecker(1)
+nonedecker: Threedecker = Threedecker()
+frigate: Frigate = Frigate(1, 2, 3)

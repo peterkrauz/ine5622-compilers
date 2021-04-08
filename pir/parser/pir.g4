@@ -2,6 +2,11 @@ grammar pir;
 
 start: generalDeclaration* EOF;
 
+generalArgument: GeneralLiteral | Identifier;
+generalArguments: generalArgument (',' generalArgument)*;
+
+classAssignment:
+	Identifier ':' ClassIdentifier '=' ClassIdentifier '(' generalArguments? ')';
 booleanAssignment:
 	Identifier ':' booleanType '=' (BooleanLiteral | Identifier);
 integerAssignment:
@@ -11,11 +16,15 @@ floatAssignment:
 charAssignment:
 	Identifier ':' charType '=' (CharLiteral | Identifier);
 
-BooleanLiteral: 'Aye' | 'Nay';
 IntegerLiteral: [0-9]+;
 FloatLiteral: [0-9]+ '.' [0-9]+;
 CharLiteral: '\'' [a-zA-Z] '\'';
-GeneralLiteral: BooleanLiteral | IntegerLiteral | FloatLiteral;
+BooleanLiteral: 'Aye' | 'Nay';
+GeneralLiteral:
+	IntegerLiteral
+	| FloatLiteral
+	| CharLiteral
+	| BooleanLiteral;
 
 booleanType: 'Boolean';
 integerType: 'Integer';
@@ -68,7 +77,8 @@ comparisonOperand: (IntegerLiteral | FloatLiteral | Identifier);
 comparisonOperator: '>' | '<' | '>=' | '<=' | '==' | '!=';
 
 generalAssignment:
-	booleanAssignment
+	classAssignment
+	| booleanAssignment
 	| floatAssignment
 	| integerAssignment
 	| charAssignment;
