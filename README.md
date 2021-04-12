@@ -10,8 +10,8 @@
 ## Requisitos do Trabalho
 
 - [x] 4 tipos, sendo int e float obrigatórios;
-- [] Instância e uso de classes;
-- [] Definição e chamada de funções;
+- [x] Instância e uso de classes;
+- [x] Definição e chamada de funções;
 - [x] Estruturas de controle if-then-else e switch-case.
 - [x] Laços for e while;
 - [] Operações *, /, +, -, >, <, <=, >= e == seguindo essa ordem de precedência;

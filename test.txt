@@ -1,2 +1,8 @@
-threedecker: Threedecker = Threedecker(a, b, c)
-nonedecker: Threedecker = Threedecker(Aye, 'c', 2.0, 5)
+ahoy fire(a: Boolean, b: Boolean) {
+
+}
+
+ahoy walkThePlank(a: Integer, b: Float) {
+    c: Boolean = Aye
+    fire(c, Nay)    
+}
