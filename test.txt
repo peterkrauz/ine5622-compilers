@@ -1,8 +1,49 @@
-ahoy fire(a: Boolean, b: Boolean) {
+temPolvorah: Boolean = Aye
+idade: Integer = 70
+
+for ano in idade {
+    cuCagado: Boolean = Aye
+}
+
+while idade > 50 {
 
 }
 
-ahoy walkThePlank(a: Integer, b: Float) {
-    c: Boolean = Aye
-    fire(c, Nay)    
+if idade > 50 {
+
+} else {
+
+}
+
+ahoy beberAgua(idade: Integer, ehVeneno: Boolean) {
+
+}
+
+beberAgua(idade, Aye)
+
+class Galley {
+    hullSize: Integer = 15
+
+    ahoy fire() {
+        char: Char = 'a'
+    }
+}
+
+class Galleon(size: Integer) {
+    ahoy navigate() {
+        switch size {
+            case size < 50 {
+
+            }
+            case size == 50 {
+
+            }
+            case size > 50 {
+
+            }
+            else {
+                
+            }
+        }
+    }
 }

@@ -71,21 +71,37 @@ generalDeclaration:
 	| functionInvocation
 	| NewLine;
 
+generalInvocation:
+	generalAssignment
+	| generalExpression
+	| typeDeclaration
+	| functionInvocation;
+
 generalExpression: loopExpression | controlExpression;
 
 loopExpression: whileExpression | forExpression;
 
 whileExpression:
-	'while' cond = comparisonExpression '{' generalDeclaration+ '}';
+	'while' cond = comparisonExpression '{' generalDeclaration* '}';
 forExpression:
-	'for' Identifier 'in' Identifier '{' generalDeclaration+ '}';
+	'for' Identifier 'in' Identifier '{' generalDeclaration* '}';
 
-controlExpression: ifExpression elseExpression?;
+controlExpression:
+	ifExpression elseExpression?
+	| switchCaseExpression;
+
+switchCaseExpression:
+	'switch' (Identifier | GeneralLiteral) '{' switchCaseBody '}';
+
+switchCaseBody: switchCaseCaseBranch* switchCaseElseBranch;
+switchCaseCaseBranch:
+	'case' (Identifier | comparisonExpression) '{' generalInvocation* '}';
+switchCaseElseBranch: 'else' '{' generalInvocation* '}';
 
 ifExpression:
-	'if' cond = comparisonExpression '{' generalDeclaration+ '}';
+	'if' cond = comparisonExpression '{' generalDeclaration* '}';
 
-elseExpression: 'else' '{' generalDeclaration+ '}';
+elseExpression: 'else' '{' generalDeclaration* '}';
 
 comparisonExpression:
 	(comparisonOperand comparisonOperator comparisonOperand)
