@@ -2,88 +2,107 @@ grammar pir;
 
 start: generalDeclaration* EOF;
 
-booleanAssignment:
-	Identifier ':' booleanType '=' BooleanLiteral;
-integerAssignment:
-	Identifier ':' integerType '=' IntegerLiteral;
-floatAssignment: Identifier ':' floatType '=' FloatLiteral;
-charAssignment: Identifier ':' charType '=' CharLiteral;
-classAssignment:
-	Identifier ':' ClassIdentifier '=' ClassIdentifier '(' classParameters? ')';
+generalArgument:
+	Identifier
+	| BooleanLiteral
+	| CharLiteral
+	| FloatLiteral
+	| IntegerLiteral;
 
-BooleanLiteral: 'Aye' | 'Nay';
+generalArguments: generalArgument (',' generalArgument)*;
+
+typedArguments: typeDeclaration (',' typeDeclaration)*;
+
+classAssignment:
+	Identifier ':' ClassIdentifier '=' ClassIdentifier '(' generalArguments? ')';
+booleanAssignment:
+	Identifier ':' booleanType '=' (BooleanLiteral | Identifier);
+integerAssignment:
+	Identifier ':' integerType '=' (IntegerLiteral | Identifier);
+floatAssignment:
+	Identifier ':' floatType '=' (FloatLiteral | Identifier);
+charAssignment:
+	Identifier ':' charType '=' (CharLiteral | Identifier);
+
 IntegerLiteral: [0-9]+;
 FloatLiteral: [0-9]+ '.' [0-9]+;
 CharLiteral: '\'' [a-zA-Z] '\'';
-ClassIdentifier: [A-Z][a-zA-Z]*;
+BooleanLiteral: 'Aye' | 'Nay';
+GeneralLiteral:
+	IntegerLiteral
+	| FloatLiteral
+	| CharLiteral
+	| BooleanLiteral;
 
 booleanType: 'Boolean';
 integerType: 'Integer';
 floatType: 'Float';
 charType: 'Char';
 
+numberType: integerType | floatType;
 type: booleanType | integerType | floatType | charType;
+
+functionKeyword: 'ahoy';
+functionName: Identifier;
+functionDeclaration:
+	functionKeyword functionName '(' typedArguments? ')' '{' generalDeclaration* '}';
+
+functionInvocation: functionName '(' generalArguments? ')';
+
+classDeclaration:
+	simpleClassDeclaration
+	| completeClassDeclaration;
+
+classConstructor:
+	'(' typeDeclaration (',' typeDeclaration)* ')';
+simpleClassDeclaration:
+	'class' ClassIdentifier classConstructor?;
+completeClassDeclaration:
+	simpleClassDeclaration '{' generalDeclaration* '}';
 
 typeDeclaration: Identifier ':' type;
 
 generalDeclaration:
-	assignment
+	generalAssignment
+	| generalExpression
 	| typeDeclaration
-	| functionDeclaration
 	| classDeclaration
+	| functionDeclaration
+	| functionInvocation
 	| NewLine;
 
-assignment:
-	booleanAssignment
+generalExpression: loopExpression | controlExpression;
+
+loopExpression: whileExpression | forExpression;
+
+whileExpression:
+	'while' cond = comparisonExpression '{' generalDeclaration+ '}';
+forExpression:
+	'for' Identifier 'in' Identifier '{' generalDeclaration+ '}';
+
+controlExpression: ifExpression elseExpression?;
+
+ifExpression:
+	'if' cond = comparisonExpression '{' generalDeclaration+ '}';
+
+elseExpression: 'else' '{' generalDeclaration+ '}';
+
+comparisonExpression:
+	(comparisonOperand comparisonOperator comparisonOperand)
+	| BooleanLiteral;
+comparisonOperand: (IntegerLiteral | FloatLiteral | Identifier);
+comparisonOperator: '>' | '<' | '>=' | '<=' | '==' | '!=';
+
+generalAssignment:
+	classAssignment
+	| booleanAssignment
 	| floatAssignment
-	| classAssignment
 	| integerAssignment
 	| charAssignment;
 
 baseParameter: Identifier | IntegerLiteral | FloatLiteral;
 
-classKeyword: 'class';
-classMembers: typeDeclaration (',' typeDeclaration)*;
-classBody: '{' NewLine* generalDeclaration* NewLine* '}';
-classParameters: baseParameter (',' baseParameter*);
-
-classDeclaration:
-	classKeyword name = ClassIdentifier '(' classMembers? ')'
-	| classKeyword name = ClassIdentifier '(' classMembers? ')' classBody;
-
-functionKeyword: 'ahoy';
-functionArguments: typeDeclaration (',' typeDeclaration)*;
-functionInvocation:
-	name = Identifier '(' functionParameters? ')';
-functionParameters: baseParameter (',' baseParameter*);
-
-functionDeclaration:
-	functionKeyword name = Identifier '(' functionArguments? ')' '{' NewLine+ statements NewLine+
-		'}';
-
-statements: assignment*;
-
-expressions: expression (',' expression)*;
-expression:
-	left = sumExpression (
-		op = ('>' | '<' | '>=' | '<=' | '==' | '!=') right = expression
-	)*;
-sumExpression:
-	left = multiplicationExpression (
-		op = ('+' | '-') right = sumExpression
-	)*;
-
-multiplicationExpression:
-	left = atomicExpression (
-		op = ('*' | '/') right = multiplicationExpression
-	)*;
-
-atomicExpression:
-	'(' expression ')'
-	| IntegerLiteral
-	| FloatLiteral
-	| functionDeclaration;
-
 NewLine: '\n';
+ClassIdentifier: [A-Z][a-zA-Z]*;
 Identifier: [a-zA-Z]+;
 WS: [\n\r\u0020\u0009\u000C]+ -> skip;

@@ -1,5 +1,8 @@
-a: Integer = 5
-b: Float = 7.0
-c: Char = 'z'
-d: Boolean = Aye
-e: Boolean = Nay
+ahoy fire(a: Boolean, b: Boolean) {
+
+}
+
+ahoy walkThePlank(a: Integer, b: Float) {
+    c: Boolean = Aye
+    fire(c, Nay)    
+}
