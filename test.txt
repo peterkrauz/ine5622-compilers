@@ -1,11 +1,8 @@
-while Aye {
-    a: Integer = 6
+ahoy fire(a: Boolean, b: Boolean) {
+
 }
 
-while 1 < 2 {
-    b: Float = 7.5
-}
-
-for item in collection {
-    a: Integer = item
+ahoy walkThePlank(a: Integer, b: Float) {
+    c: Boolean = Aye
+    fire(c, Nay)    
 }
