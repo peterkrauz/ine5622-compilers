@@ -3,3 +3,4 @@ pir/parser/.antlr
 pir/parser/*.java
 pir/parser/*.tokens
 pir/parser/*.interp
+/env/*
