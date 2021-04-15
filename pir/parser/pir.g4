@@ -13,16 +13,32 @@ generalArguments: generalArgument (',' generalArgument)*;
 
 typedArguments: typeDeclaration (',' typeDeclaration)*;
 
+// Assignments
+
 classAssignment:
 	Identifier ':' ClassIdentifier '=' ClassIdentifier '(' generalArguments? ')';
+
 booleanAssignment:
 	Identifier ':' booleanType '=' (BooleanLiteral | Identifier);
+
 integerAssignment:
-	Identifier ':' integerType '=' (IntegerLiteral | Identifier);
+	Identifier ':' integerType '=' (
+		integerAlgebraicExpression
+		| IntegerLiteral
+		| Identifier
+	);
+
 floatAssignment:
-	Identifier ':' floatType '=' (FloatLiteral | Identifier);
+	Identifier ':' floatType '=' (
+		floatAlgebraicExpression
+		| FloatLiteral
+		| Identifier
+	);
+
 charAssignment:
 	Identifier ':' charType '=' (CharLiteral | Identifier);
+
+// Literals
 
 IntegerLiteral: [0-9]+;
 FloatLiteral: [0-9]+ '.' [0-9]+;
@@ -42,12 +58,16 @@ charType: 'Char';
 numberType: integerType | floatType;
 type: booleanType | integerType | floatType | charType;
 
+// Functions
+
 functionKeyword: 'ahoy';
 functionName: Identifier;
 functionDeclaration:
 	functionKeyword functionName '(' typedArguments? ')' '{' generalDeclaration* '}';
 
 functionInvocation: functionName '(' generalArguments? ')';
+
+// Classes
 
 classDeclaration:
 	simpleClassDeclaration
@@ -77,7 +97,12 @@ generalInvocation:
 	| typeDeclaration
 	| functionInvocation;
 
-generalExpression: loopExpression | controlExpression;
+// Epressions
+
+generalExpression:
+	loopExpression
+	| controlExpression
+	| algebraicExpression;
 
 loopExpression: whileExpression | forExpression;
 
@@ -106,8 +131,59 @@ elseExpression: 'else' '{' generalDeclaration* '}';
 comparisonExpression:
 	(comparisonOperand comparisonOperator comparisonOperand)
 	| BooleanLiteral;
-comparisonOperand: (IntegerLiteral | FloatLiteral | Identifier);
+comparisonOperand: (
+		IntegerLiteral
+		| FloatLiteral
+		| Identifier
+		| algebraicExpression
+	);
 comparisonOperator: '>' | '<' | '>=' | '<=' | '==' | '!=';
+
+algebraicExpression:
+	integerAlgebraicExpression
+	| floatAlgebraicExpression;
+
+// Integer
+
+integerAlgebraicExpression:
+	integerSummationExpression
+	| integerMultiplicationExpression;
+
+integerMultiplicationExpression:
+	IntegerLiteral (MultiplicationOperator | DivisionOperator) (
+		IntegerLiteral
+		| integerMultiplicationExpression
+	);
+
+integerSummationExpression:
+	(IntegerLiteral | integerMultiplicationExpression) (
+		AdditionOperator
+		| SubtractionOperator
+	) (IntegerLiteral | integerAlgebraicExpression);
+
+// Float
+
+floatAlgebraicExpression:
+	floatSummationExpression
+	| floatMultiplicationExpression;
+
+floatMultiplicationExpression:
+	FloatLiteral (MultiplicationOperator | DivisionOperator) (
+		IntegerLiteral
+		| FloatLiteral
+		| floatMultiplicationExpression
+	);
+
+floatSummationExpression:
+	(FloatLiteral | floatMultiplicationExpression) (
+		AdditionOperator
+		| SubtractionOperator
+	) (IntegerLiteral | FloatLiteral | floatSummationExpression);
+
+AdditionOperator: '+';
+SubtractionOperator: '-';
+MultiplicationOperator: '*';
+DivisionOperator: '/';
 
 generalAssignment:
 	classAssignment

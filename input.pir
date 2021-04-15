@@ -1,10 +1,19 @@
-temPolvorah: Boolean = Aye
-idade: Integer = 70
+intDeclaration: Integer = 10
+intDeclarationWithSum: Integer = 10 + 10
+intDeclarationWithSubtraction: Integer = 10 - 10
+intDeclarationWithMultipleSummation: Integer = 10 + 10 + 10 - 10
 
-70 * 15.5
-idade = 70 * 15.5
+intDeclarationWithMultiplication: Integer = 10 * 10
+intDeclarationWithDivision: Integer = 10 / 10
 
-if((70 * idade) > 1000)
+pi: Float = 3.14
+pi: Float = 0.14 + 3
+pi: Float = 1.57 * 2
+pi: Float = 6.28 / 2
+
+if 3.0 + 0.14 > 2 * 2 {
+    yourMathIsWrong: Boolean = Aye
+}
 
 for ano in idade {
     ehAno: Boolean = Aye
@@ -19,6 +28,8 @@ if idade > 50 {
 } else {
 
 }
+
+temPolvorah: Boolean = Aye
 
 ahoy beberAgua(idade: Integer, ehVeneno: Boolean) {
 
