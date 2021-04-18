@@ -6,6 +6,8 @@ intDeclarationWithMultipleSummation: Integer = 10 + 10 + 10 - 10
 intDeclarationWithMultiplication: Integer = 10 * 10
 intDeclarationWithDivision: Integer = 10 / 10
 
+intDeclarationWithPrecedence: Integer = (5 + 10) + 5 / ((10 - 5) * 10) # Summation and multiplication precedence test
+
 pi: Float = 3.14
 pi: Float = 0.14 + 3
 pi: Float = 1.57 * 2
