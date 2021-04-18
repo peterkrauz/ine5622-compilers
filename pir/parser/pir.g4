@@ -56,7 +56,7 @@ floatType: 'Float';
 charType: 'Char';
 
 numberType: integerType | floatType;
-type: booleanType | integerType | floatType | charType;
+genericType: booleanType | integerType | floatType | charType;
 
 // Functions
 
@@ -80,7 +80,7 @@ simpleClassDeclaration:
 completeClassDeclaration:
 	simpleClassDeclaration '{' generalDeclaration* '}';
 
-typeDeclaration: Identifier ':' type;
+typeDeclaration: Identifier ':' genericType;
 
 generalDeclaration:
 	generalAssignment
