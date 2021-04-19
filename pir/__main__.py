@@ -1,7 +1,6 @@
 from antlr4 import FileStream, CommonTokenStream
 from os import path
 import argparse
-from ast_decompiler import decompile
 
 try:
     from .parser.pirLexer import pirLexer
@@ -14,8 +13,8 @@ except ImportError:
     from .parser.pirLexer import pirLexer
     from .parser.pirParser import pirParser
 
-# import astVisitor after the try-except
-from .astVisitor import astVisitor
+from .globVisitor import globVisitor
+from .parser.pirVisitor import pirVisitor
 
 
 def main():
@@ -23,7 +22,6 @@ def main():
     # Argument parser
     parser_args = argparse.ArgumentParser(prog='pir', description='C-- interpreter')
     parser_args.add_argument('input', type=str, help='source code')
-    parser_args.add_argument('-o', metavar='', type=str, default=None, help='python output')
 
     args = parser_args.parse_args()
     #################################
@@ -35,18 +33,8 @@ def main():
     parser = pirParser(stream)
 
     tree = parser.start() # Get AST
-
-    # Transverse AST to generate python ast
-    visitor = astVisitor(args.input)
-    ast = visitor.visitStart(tree)
-
-    code = compile(source=ast, filename=args.input, mode='exec')
-
-    exec(code, globals())
-
-    if args.o:
-        with open(args.o, 'w') as file:
-            file.write(decompile(ast))
+    visitor = globVisitor(args.input)
+    glob = visitor.visitStart(tree)
 
 if __name__ == '__main__':
     main()
