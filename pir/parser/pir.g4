@@ -203,7 +203,7 @@ generalAssignment:
 
 baseParameter: Identifier | IntegerLiteral | FloatLiteral;
 
-NewLine: '\n';
+NewLine: '\n' -> skip;
 ClassIdentifier: [A-Z][a-zA-Z]*;
 Identifier: [a-zA-Z0-9]+;
 Comment: '#' ~[\r\n]* -> skip;
