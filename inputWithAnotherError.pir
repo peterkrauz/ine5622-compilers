@@ -1,0 +1,5 @@
+class BrokenGalley {
+
+}
+
+class galleyWithMinorStartingLetter()
