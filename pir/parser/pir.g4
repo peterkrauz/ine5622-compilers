@@ -89,6 +89,7 @@ generalDeclaration:
 	| classDeclaration
 	| functionDeclaration
 	| functionInvocation
+	| Comment
 	| NewLine;
 
 generalInvocation:
@@ -146,20 +147,28 @@ algebraicExpression:
 // Integer
 
 integerAlgebraicExpression:
-	integerSummationExpression
-	| integerMultiplicationExpression;
+	integerMultiplicationExpression
+	| integerSummationExpression;
 
 integerMultiplicationExpression:
-	IntegerLiteral (MultiplicationOperator | DivisionOperator) (
+	(IntegerLiteral | '(' integerAlgebraicExpression ')') (
+		MultiplicationOperator
+		| DivisionOperator
+	) (
 		IntegerLiteral
-		| integerMultiplicationExpression
+		| integerAlgebraicExpression
+		| '(' integerAlgebraicExpression ')'
 	);
 
 integerSummationExpression:
-	(IntegerLiteral | integerMultiplicationExpression) (
+	(IntegerLiteral | '(' integerAlgebraicExpression ')') (
 		AdditionOperator
 		| SubtractionOperator
-	) (IntegerLiteral | integerAlgebraicExpression);
+	) (
+		IntegerLiteral
+		| integerAlgebraicExpression
+		| '(' integerAlgebraicExpression ')'
+	);
 
 // Float
 
@@ -196,5 +205,6 @@ baseParameter: Identifier | IntegerLiteral | FloatLiteral;
 
 NewLine: '\n';
 ClassIdentifier: [A-Z][a-zA-Z]*;
-Identifier: [a-zA-Z]+;
+Identifier: [a-zA-Z0-9]+;
+Comment: '#' ~[\r\n]* -> skip;
 WS: [\n\r\u0020\u0009\u000C]+ -> skip;
